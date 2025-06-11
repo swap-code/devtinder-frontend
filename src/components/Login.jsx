@@ -1,20 +1,31 @@
 import axios from "axios";
 import React from "react";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const [emailId, setEmail] = React.useState("");
+  const dispatch = useDispatch();
+  const [emailId, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/login", {
-        emailId,
-        password,
-      },{withCredentials: true});
+      const response = await axios.post(
+        "http://localhost:3000/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
+      console.log("Login successful", response.data.user);
+      dispatch(addUser(response.data.user));
+      navigate("/feed")
     } catch (err) {
       console.error("Login failed:", err);
     }
   };
-
 
   return (
     <div className="flex justify-center items-center h-screen">

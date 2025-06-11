@@ -1,5 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 const Navbar = () => {
+
+  const user=useSelector((store) => store.user);
+  console.log("User in Navbar:", user);
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
@@ -11,6 +17,8 @@ const Navbar = () => {
           placeholder="Search"
           className="input input-bordered w-24 md:w-auto"
         />
+        {user?<p> welcome, {user?.firstName}</p>:""}
+        
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -20,7 +28,7 @@ const Navbar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user?.photoUrl || "https://via.placeholder.com/150"}
               />
             </div>
           </div>
