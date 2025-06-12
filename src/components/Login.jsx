@@ -19,7 +19,6 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      console.log("Login successful", response.data.user);
       dispatch(addUser(response.data.user));
       navigate("/feed")
     } catch (err) {
