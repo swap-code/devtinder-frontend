@@ -1,6 +1,23 @@
+import axios from "axios";
 import React from "react";
+import { removeFeed } from "../utils/feedSlice";
+import { useDispatch } from "react-redux";
 
 const UserCard = ({ data }) => {
+  console.log(data);
+  const dispatch = useDispatch();
+  const handleSendrequest = async (status, id) => {
+    try {
+      await axios.post(
+        `http://localhost:3000/request/send/${status}/${id}`,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeFeed(id));
+    } catch (error) {
+      console.error(`Error updating status to ${status}:`, error);
+    }
+  };
   if (!data) {
     return <div>Loading...</div>;
   }
@@ -10,9 +27,9 @@ const UserCard = ({ data }) => {
         <figure className="flex justify-center bg-red-100 p-4">
           <img
             src={
-              data?.photoUrl && data.photoUrl !== ''
+              data?.photoUrl && data.photoUrl !== ""
                 ? data.photoUrl
-                : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+                : "https://cdn-icons-png.flaticon.com/512/149/149071.png"
             }
             alt="user"
             className="rounded-full w-32 h-32 object-cover border-4 border-white shadow-md"
@@ -31,10 +48,16 @@ const UserCard = ({ data }) => {
           <p className="text-md text-gray-500 mb-4">{data?.email}</p>
         </div>
         <div className="card-actions flex justify-center gap-4 pb-6">
-          <button className="btn bg-red-400 hover:bg-red-500 text-white font-semibold px-6 py-2 rounded-full shadow transition">
+          <button
+            onClick={() => handleSendrequest("interested", data._id)}
+            className="btn bg-red-400 hover:bg-red-500 text-white font-semibold px-6 py-2 rounded-full shadow transition"
+          >
             Send request
           </button>
-          <button className="btn bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-full shadow transition">
+          <button
+            onClick={() => handleSendrequest("ignored", data._id)}
+            className="btn bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-full shadow transition"
+          >
             Ignore
           </button>
         </div>
