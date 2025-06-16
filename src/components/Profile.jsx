@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import axios from "axios";
+import { BASE_URL } from "./appConstants";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const response = await axios.patch(
-        "http://localhost:3000/profile/edit",
+        BASE_URL+"/profile/edit",
         { form },
         {
           withCredentials: true,

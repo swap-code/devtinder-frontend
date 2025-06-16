@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "./appConstants";
 
 const LoginSignup = () => {
   const dispatch = useDispatch();
@@ -30,8 +31,8 @@ const LoginSignup = () => {
   const handleSubmit = async () => {
     try {
       const endpoint = isSignup
-        ? "http://localhost:3000/signup"
-        : "http://localhost:3000/login";
+        ? BASE_URL+"/signup"
+        : BASE_URL+"/login";
 
       const payload = isSignup
         ? form

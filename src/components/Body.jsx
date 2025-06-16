@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BASE_URL } from "./appConstants";
 
 const Body = () => {
   const user= useSelector((store) => store.user);
@@ -13,7 +14,7 @@ const Body = () => {
   const fetchUser = async () => {
     try {
       if(user) return;
-      const response = await axios.get("http://localhost:3000/profile/view", {
+      const response = await axios.get(BASE_URL+"/profile/view", {
         withCredentials: true,
       });
       dispatch(addUser(response.data));

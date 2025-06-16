@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { BASE_URL } from "./appConstants";
 
 const Requests = () => {
   const [requests, setRequests] = React.useState([]);
@@ -7,10 +8,9 @@ const Requests = () => {
   const fetchConnections = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/user/request/recieved",
+        BASE_URL+"/user/request/recieved",
         { withCredentials: true }
       );
-      console.log(response.data.requests)
       setRequests(response.data.requests);
     } catch (error) {
       console.error("Error fetching connections:", error);
@@ -20,7 +20,7 @@ const Requests = () => {
   const handleResponse = async (requestId, status) => {
     try {
       await axios.post(
-        `http://localhost:3000/request/review/${status}/${requestId}`,
+        BASE_URL+`/request/review/${status}/${requestId}`,
         {},
         { withCredentials: true }
       );

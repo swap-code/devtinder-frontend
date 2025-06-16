@@ -3,12 +3,13 @@ import axios from "axios";
 import { addFeed } from "../utils/feedSlice";
 import { useDispatch, useSelector } from "react-redux";
 import UserCard from "./userCard";
+import { BASE_URL } from "./appConstants";
 
 const Feed = () => {
   const dispatch = useDispatch();
   const getFeed = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/feed", {
+      const response = await axios.get(BASE_URL+"/feed", {
         withCredentials: true,
       });
       dispatch(addFeed(response.data));
@@ -20,8 +21,12 @@ const Feed = () => {
   React.useEffect(() => {
     getFeed();
   }, []);
+
   if (feed.length <= 0) {
-    return <>No User found</>;
+    alert("hello")
+    return <>
+   <span>No more user left</span>
+    </>;
   }
   return (
     <div>
